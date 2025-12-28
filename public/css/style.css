@@ -1,0 +1,1670 @@
+/* =====================================================
+   VEM COMIGO — CSS BASE RECONSTRUÍDO DO ZERO
+   NÃO DEPENDE DE HTML NOVO
+===================================================== */
+
+/* =====================
+   VARIÁVEIS GLOBAIS
+===================== */
+:root {
+  --laranja: #ff7a00;
+  --azul: #0057ff;
+
+  --roxo-bg: linear-gradient(180deg, #4b4ac8 0%, #6a5acd 100%);
+
+  --branco: #ffffff;
+  --preto: #111827;
+  --cinza: #6b7280;
+  --cinza-claro: #e5e7eb;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --shadow-card: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* =====================
+   RESET LIMPO
+===================== */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--roxo-bg);
+  color: var(--preto);
+}
+
+/* =====================
+   APP ROOT
+===================== */
+#app {
+  min-height: 100vh;
+  padding: 64px 16px 140px;
+}
+
+/* =====================================================
+   HEADER FIXA
+===================================================== */
+#app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--branco);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 10px;
+  z-index: 1000;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+
+#app-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#app-header .logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--laranja);
+}
+
+#app-header .app-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--laranja);
+}
+
+/* =====================================================
+   TÍTULOS
+===================================================== */
+.page-title,
+.page h1 {
+  text-align: center;
+  color: var(--branco);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 16px 0;
+}
+
+.section-title {
+  color: var(--branco);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 24px 0 12px;
+}
+
+/* =====================================================
+   CARD — BASE NEUTRA
+===================================================== */
+
+.card {
+  background: var(--branco);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+/* =====================================================
+   INFO CARD — AVISO INLINE (EXCEÇÃO)
+===================================================== */
+
+.card.info-card {
+  padding: 6px 10px;
+  margin: 6px 0 10px;
+
+  background: #ffe08a;
+  border-left: 3px solid #f59e0b;
+  border-radius: 6px;
+
+  box-shadow: none;
+}
+
+.card.info-card,
+.card.info-card p {
+  font-size: 12px;
+  line-height: 1.3;
+  color: #3f2f00;
+  margin: 0;
+}
+
+/* =====================================================
+   FORMULÁRIOS
+===================================================== */
+.card input,
+.card select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--cinza-claro);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.card input:focus,
+.card select:focus {
+  outline: none;
+  border-color: var(--laranja);
+}
+
+/* =====================================================
+   VIAGEM CARD (NORMAL)
+===================================================== */
+.viagem-card {
+  background: var(--branco);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+/* =====================================================
+   VIAGEM EM DESTAQUE — BASE REAL (SEM CLASSE .destaque)
+===================================================== */
+
+.viagem-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+  position: relative;
+}
+
+/* Quando EXISTE badge-destaque dentro do card */
+.viagem-card:has(.badge-destaque) {
+  background: linear-gradient(135deg, #ff7a00, #0057ff);
+  color: #ffffff;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+  animation: destaquePulse 2.8s ease-in-out infinite;
+}
+
+/* Texto branco no destaque */
+.viagem-card:has(.badge-destaque) * {
+  color: #ffffff;
+}
+
+/* Badge real (não inventada) */
+.badge-destaque {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  background: rgba(0,0,0,0.35);
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Animação VISÍVEL */
+@keyframes destaquePulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+
+/* =====================================================
+   AVATAR COM INICIAIS
+===================================================== */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7a00, #0057ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--branco);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* =====================================================
+   CHAT / MENSAGENS
+===================================================== */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msg {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.msg.me {
+  align-self: flex-end;
+  background: var(--laranja);
+  color: var(--branco);
+}
+
+.msg.other {
+  align-self: flex-start;
+  background: var(--branco);
+  color: var(--preto);
+}
+
+
+/* =====================================================
+   AJUSTE DE ESPAÇAMENTO — CARDS DE VIAGEM
+===================================================== */
+
+.viagem-card p {
+  margin: 4px 0;
+  line-height: 1.25;
+}
+
+.viagem-card span,
+.viagem-card small {
+  line-height: 1.2;
+}
+
+.viagem-card strong {
+  line-height: 1.25;
+}
+
+/* =====================================================
+   FOOTER FIXO — NAVEGAÇÃO PRINCIPAL
+===================================================== */
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 64px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  border-top: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 -6px 18px rgba(0,0,0,0.08);
+
+  z-index: 1000;
+}
+
+/* Botões */
+#footer button {
+  all: unset;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+
+  font-size: 11px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+/* Ícone (primeiro filho geralmente é ícone/emoji/svg) */
+#footer button > :first-child {
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Estado ativo */
+#footer button.active {
+  color: var(--laranja);
+  font-weight: 600;
+}
+
+/* Indicador visual do ativo */
+#footer button.active::after {
+  content: "";
+  width: 20px;
+  height: 3px;
+  margin-top: 2px;
+  border-radius: 3px;
+  background: var(--laranja);
+}
+
+/* Feedback de toque */
+#footer button:active {
+  transform: scale(0.96);
+}
+
+
+
+
+
+/* =====================================================
+   BANNER FIXO — PUBLICIDADE
+===================================================== */
+
+#banner-area {
+  position: fixed;
+  bottom: 64px; /* acima do footer */
+  left: 16px;
+  right: 16px;
+
+  height: 100px;
+  z-index: 999;
+
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+/* Slide base */
+.banner-slide {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+
+  padding: 16px 18px;
+  border-radius: 16px;
+
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* Slide ativo */
+.banner-slide.active {
+  opacity: 1;
+}
+
+/* ===============================
+   BANNER COM IMAGEM
+================================ */
+
+.banner-slide.image {
+  background-size: cover;
+  background-position: center;
+}
+
+/* Overlay leve para leitura */
+.banner-slide.image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.05),
+    rgba(0,0,0,0.12)
+  );
+  border-radius: 16px;
+}
+
+/* Mantém texto acima do overlay */
+.banner-slide.image * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===============================
+   BANNER DE TEXTO / GRADIENTE
+================================ */
+
+.banner-slide.text {
+  background: linear-gradient(135deg, #ff7a00, #0057ff);
+}
+
+/* Variações opcionais */
+.banner-slide.orange {
+  background: linear-gradient(135deg, #ff7a00, #ff9a3d);
+}
+
+.banner-slide.blue {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
+.banner-slide.green {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+/* ===============================
+   TEXTO DO BANNER
+================================ */
+
+.banner-slide strong {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.banner-slide span {
+  font-size: 13px;
+  opacity: 0.9;
+  line-height: 1.3;
+}
+
+/* ===============================
+   TAG "PUBLICIDADE"
+================================ */
+
+.banner-tag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  background: rgba(0,0,0,0.55);
+  color: #ffffff;
+
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  z-index: 2;
+}
+
+/* ===============================
+   TOQUE / CLIQUE
+================================ */
+
+#banner-area:active {
+  transform: scale(0.98);
+}
+/* ===============================
+   FIX DEFINITIVO — BADGE NO BANNER DE IMAGEM
+================================ */
+
+/* Garante que o banner seja referência absoluta */
+.banner-slide {
+  position: absolute;
+}
+
+/* Remove qualquer influência de flex na badge */
+.banner-slide .banner-tag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  align-self: flex-start;
+  margin: 0;
+
+  z-index: 3;
+}
+
+/* No banner de imagem, força ainda mais */
+.banner-slide.image .banner-tag {
+  top: 8px;
+  right: 8px;
+}
+
+
+/* =====================================================
+   TELA: MENSAGENS (LISTA – ESTILO WHATSAPP)
+===================================================== */
+
+/* Card principal */
+.mensagens-card {
+  padding: 8px 0;
+}
+
+/* Item de conversa */
+.mensagem-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 16px;
+  position: relative;
+}
+
+/* Separador entre mensagens */
+.mensagem-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 68px;
+  right: 16px;
+  bottom: 0;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+/* Avatar */
+.mensagem-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #ff7a00, #ff9a3d);
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* Conteúdo (nome + última mensagem) */
+.mensagem-conteudo {
+  flex: 1;
+  min-width: 0;
+}
+
+.mensagem-conteudo strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 2px;
+}
+
+.mensagem-conteudo p {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.3;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hora */
+.mensagem-hora {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+/* Mensagem vazia */
+.mensagem-vazia {
+  text-align: center;
+  padding: 16px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Toque / hover */
+.mensagem-item:active {
+  background: rgba(0,0,0,0.04);
+}
+
+/* =====================================================
+   CHAT ABERTO — ESTILO WHATSAPP
+===================================================== */
+
+/* Área do chat */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 16px;
+  padding-bottom: 120px; /* espaço para input + footer */
+}
+
+/* Mensagem base */
+.chat-mensagem {
+  max-width: 75%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  position: relative;
+  word-wrap: break-word;
+}
+
+/* Mensagem recebida */
+.chat-mensagem.recebida {
+  align-self: flex-start;
+  background: #ffffff;
+  color: #111827;
+  border-top-left-radius: 6px;
+}
+
+/* Mensagem enviada */
+.chat-mensagem.enviada {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #ffffff;
+  border-top-right-radius: 6px;
+}
+
+/* Hora da mensagem */
+.chat-hora {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* =====================================================
+   INPUT DO CHAT (FIXO)
+===================================================== */
+
+.chat-input-area {
+  position: fixed;
+  bottom: 64px; /* acima do footer */
+  left: 0;
+  right: 0;
+
+  padding: 10px 12px;
+  background: #ffffff;
+
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
+  z-index: 999;
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.chat-input-area input:focus {
+  outline: none;
+  border-color: #22c55e;
+}
+
+.chat-input-area button {
+  background: #22c55e;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+
+/* ================================
+   PERFIL
+================================ */
+
+.perfil-card {
+  padding: 20px;
+}
+
+.perfil-avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.perfil-avatar img,
+.avatar-placeholder {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7a00, #0057ff);
+  color: #fff;
+  font-size: 32px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.perfil-linha {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.perfil-linha strong {
+  color: #111827;
+}
+
+.perfil-linha span {
+  color: #555;
+  text-align: right;
+}
+
+.perfil-info {
+  margin: 16px 0;
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}
+
+.page {
+  overflow: visible !important;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* ===============================
+   AVISO INLINE — NÃO CARD
+================================ */
+
+.page .card.info-card {
+  /* Remove identidade de card */
+  background: #ffe08a !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  /* Barra visual */
+  border-left: 4px solid #f59e0b !important;
+
+  /* Dimensão mínima */
+  padding: 4px 8px !important;
+  margin: 6px 0 10px !important;
+
+  min-height: auto !important;
+}
+
+/* Texto seco, sem espaçamento de card */
+.page .card.info-card p,
+.page .card.info-card {
+  margin: 0 !important;
+  font-size: 14px !important;
+  line-height: 1.25 !important;
+  color: #3f2f00 !important;
+}
+
+/* ===============================
+   CARD DE VIAGEM — DESTAQUE
+================================ */
+
+.viagem-card.destaque {
+  position: relative;
+
+  background: linear-gradient(
+    to bottom,
+    #fde2e2 0%,
+    #fff4cc 100%
+  );
+
+  border: 2px solid #f59e0b;
+  border-radius: 14px;
+
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.12);
+
+  padding: 14px;
+}
+
+.badge-destaque {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  background: #f59e0b;
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+/* =====================================================
+   COMPONENTES – STATUS DE VIAGEM / SOLICITAÇÃO
+===================================================== */
+
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+
+/* -------------------------------
+   STATUS: PENDENTE
+-------------------------------- */
+
+.status-pendente {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+
+/* -------------------------------
+   STATUS: ACEITA
+-------------------------------- */
+
+.status-aceita {
+  background: #dcfce7;
+  color: #166534;
+}
+
+
+/* -------------------------------
+   STATUS: RECUSADA
+-------------------------------- */
+
+.status-recusada {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+
+/* -------------------------------
+   STATUS: FINALIZADA
+-------------------------------- */
+
+.status-finalizada {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* =====================================================
+   LAYOUT – ESPAÇO PARA FOOTER E BANNER FIXOS
+   -----------------------------------------------------
+   Garante que o conteúdo não fique escondido
+===================================================== */
+
+/* Container padrão das telas */
+.page {
+  padding-bottom: 140px;
+}
+
+/*
+  140px = 
+  footer (~60px)
+  + banner (~60px)
+  + respiro de segurança
+*/
+
+
+/* Caso exista page-container em alguma tela */
+.page-container {
+  padding-bottom: 140px;
+}
+
+/* =====================================================
+   BOTÕES — BASE ÚNICA (SEM HERANÇA)
+===================================================== */
+
+button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: none;
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  background: transparent;
+  color: inherit;
+}
+
+/* Ações */
+.btn-primary {
+  background: var(--laranja);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: var(--cinza);
+  color: #ffffff;
+}
+
+/* Estados */
+.btn-danger {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.btn-warning {
+  background: #f59e0b;
+  color: #111827;
+}
+
+.btn-success {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+/* Full */
+.full {
+  width: 100%;
+}
+
+/* Logout NUNCA herda */
+.btn-logout {
+  background: #b91c1c;
+  color: #ffffff;
+}
+/* =====================================================
+   STATUS DE VIAGEM — PADRÃO VISUAL ÚNICO
+   NÃO ALTERA HTML / NÃO QUEBRA HERANÇA
+===================================================== */
+
+/* Base do status */
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* 🕒 Pendente */
+.status.pendente {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* ✅ Aceita */
+.status.aceita {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* ❌ Recusada */
+.status.recusada {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* 🏁 Finalizada */
+.status.finalizada {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* =====================================================
+   STATUS APLICADO AO CARD (OPCIONAL)
+===================================================== */
+
+/* Pendente */
+.viagem-card.pendente {
+  border-left: 4px solid #f59e0b;
+}
+
+/* Aceita */
+.viagem-card.aceita {
+  border-left: 4px solid #16a34a;
+}
+
+/* Recusada */
+.viagem-card.recusada {
+  border-left: 4px solid #dc2626;
+  opacity: 0.85;
+}
+
+/* Finalizada */
+.viagem-card.finalizada {
+  border-left: 4px solid #6b7280;
+  opacity: 0.8;
+}
+/* =====================================================
+   HOME — RESET CONTROLADO (ANTI-HERANÇA)
+===================================================== */
+
+.home-hero {
+  all: unset;
+  display: block;
+
+  padding: 16px;
+  background: #ffffff;
+  color: #111827;
+
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+/* Tipografia da Home */
+.home-hero h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.home-hero p {
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Cards da Home */
+.home-hero .card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.08);
+}
+
+/* Botões DENTRO da Home */
+.home-hero .btn-primary {
+  background: var(--laranja);
+  color: #ffffff;
+}
+
+.home-hero .btn-secondary {
+  background: var(--azul);
+  color: #ffffff;
+}
+
+/* =====================================================
+   HOME — RESET + ESTRUTURA FINAL (ISOLADA)
+===================================================== */
+
+.page.home {
+  padding-bottom: 90px;
+}
+
+/* ---------- HERO ---------- */
+.page.home .home-hero {
+  background: linear-gradient(135deg, var(--laranja), var(--vermelho));
+  color: #ffffff;
+  padding: 32px 20px;
+  border-radius: 0 0 24px 24px;
+}
+
+.page.home .home-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.page.home .logo-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+}
+
+.page.home h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.page.home .home-hero p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 100;
+  color: var(--branco);
+}
+
+/* ---------- CARDS ---------- */
+.page.home .home-card {
+  background: #ffffff;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.page.home .home-card h2,
+.page.home .home-card h3 {
+  margin: 0 0 8px;
+}
+
+.page.home .home-sub {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+/* ---------- STATS ---------- */
+.page.home .home-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.page.home .stat {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+.page.home .stat strong {
+  display: block;
+  font-size: 18px;
+  color: var(--azul);
+}
+
+.page.home .stat span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ---------- ACTIONS ---------- */
+.page.home .home-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.page.home .home-actions .btn {
+  flex: 1;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.page.home .home-actions .green {
+  background: #22c55e;
+}
+
+.page.home .home-actions .orange {
+  background: var(--laranja);
+}
+/* ===============================
+   HOME — FEATURES (AUTO AJUSTE)
+=============================== */
+
+.page.home .home-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+.page.home .feature {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  text-align: center;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+.page.home .feature strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.page.home .feature span {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ---------- QUICK ---------- */
+.page.home .home-quick {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.page.home .quick-btn {
+  background: #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =====================================================
+   BOTÕES — PADRÃO GLOBAL (RESET VISUAL)
+===================================================== */
+
+button,
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 48px;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+  border: none;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+/* =====================================================
+   BOTÃO LOGOUT — CENTRALIZADO (60%)
+===================================================== */
+
+.btn-logout {
+  width: 60%;
+  max-width: 320px;
+
+  margin: 16px auto 0;
+
+  min-height: 44px;
+  padding: 12px 16px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+}
+/* =====================================================
+   BOTÕES TIPO LINK (Voltar, Ver mais, ações secundárias)
+===================================================== */
+
+.btn-link {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  padding: 0 !important;
+  margin: 0;
+
+  width: auto !important;
+  min-width: auto !important;
+
+  display: inline;
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--azul);
+
+  cursor: pointer;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.btn-link:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+/* =====================================================
+   REMOVER EFEITO DE CLIQUE / SOMBRA GLOBAL (APP INTEIRO)
+===================================================== */
+
+button,
+button:active,
+button:focus,
+a,
+a:active,
+a:focus,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-link,
+#footer button {
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+  background-image: none !important;
+}
+
+/* Remove highlight quadrado no mobile (Android / Chrome) */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =====================================================
+   FEEDBACK DE CLIQUE — BOTÕES DE AÇÃO
+===================================================== */
+
+.btn-primary:active,
+.btn-secondary:active,
+.btn-danger:active,
+.btn.green:active,
+.btn.orange:active {
+  transform: scale(0.85);
+  filter: brightness(0.75);
+}
+
+
+/* =====================================================
+   TELA OFERECER – OBSERVAÇÕES FULL WIDTH (CSS ONLY)
+===================================================== */
+
+.page textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* =====================================================
+   OFERECER — DATA + HORA NA MESMA LINHA
+   (sem alterar HTML)
+===================================================== */
+
+/* Pai que contém data e hora */
+#data,
+#hora {
+  width: 100%;
+}
+
+/* Container direto que envolve data + hora */
+#data,
+#hora {
+  display: block;
+}
+
+/* Seleciona o wrapper que contém os dois form-groups */
+#data,
+#hora {
+  max-width: 100%;
+}
+
+/* Flex apenas no container correto */
+#data,
+#hora {
+  box-sizing: border-box;
+}
+
+/* PAI REAL (div sem classe) */
+#data,
+#hora {
+}
+
+/* Regra que FUNCIONA */
+#data,
+#hora {
+}
+
+/* 🔴 REGRA FINAL — ESSA É A QUE IMPORTA */
+#data,
+#hora {
+}
+
+/* Oferecer: data + hora lado a lado */
+#data,
+#hora {
+  width: 100%;
+}
+
+#data,
+#hora {
+  box-sizing: border-box;
+}
+
+/* container pai direto */
+#data,
+#hora {
+}
+
+/* PAI DOS DOIS INPUTS */
+#data,
+#hora {
+}
+
+/* ✔️ REGRA FUNCIONAL */
+#data,
+#hora {
+}
+
+/* Oferecer: Data + Hora em colunas */
+#data,
+#hora {
+  width: 100%;
+}
+
+#data,
+#hora {
+  box-sizing: border-box;
+}
+
+/* pai anônimo dos form-group */
+#data,
+#hora {
+}
+
+/* regra correta usando :has (suportado nos browsers modernos) */
+div:has(> .form-group > #data):has(> .form-group > #hora) {
+  display: flex;
+  gap: 12px;
+}
+
+div:has(> .form-group > #data) .form-group,
+div:has(> .form-group > #hora) .form-group {
+  flex: 1;
+}
+
+
+
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.login-logo img {
+  width: 100px;   /* tamanho ideal SPA */
+  max-width: 60%;
+  height: auto;
+}
+
+
+.header-logo {
+  height: 28px;     /* tamanho ideal para header */
+  width: auto;
+  display: block;
+}
+
+
+/* =====================================================
+   CHAT DA VIAGEM — LAYOUT GERAL
+   ===================================================== */
+
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f4f4f4;
+}
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: #ff7a00;
+  border-bottom: 1px solid #ddd;
+}
+
+.chat-header h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.chat-header button {
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+/* =====================================================
+   ÁREA DE MENSAGENS
+   ===================================================== */
+
+.chat-mensagens {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  background: #e5ddd5;
+}
+
+/* =====================================================
+   MENSAGEM (BASE)
+   ===================================================== */
+
+.msg {
+  display: flex;
+  max-width: 80%;
+}
+
+/* =====================================================
+   MENSAGEM MINHA
+   ===================================================== */
+
+.msg.minha {
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+
+.msg.minha .msg-balao {
+  background: #dcf8c6;
+  border-bottom-right-radius: 4px;
+}
+
+/* =====================================================
+   MENSAGEM OUTRA
+   ===================================================== */
+
+.msg.outra {
+  align-self: flex-start;
+  justify-content: flex-start;
+}
+
+.msg.outra .msg-balao {
+  background: #ffae00;
+  border-bottom-left-radius: 4px;
+}
+
+/* =====================================================
+   BALÃO DA MENSAGEM
+   ===================================================== */
+
+.msg-balao {
+  padding: 8px 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  word-wrap: break-word;
+}
+
+.msg-balao span {
+  font-size: 14px;
+}
+
+.msg-balao small {
+  font-size: 11px;
+  color: #555;
+  align-self: flex-end;
+}
+
+/* =====================================================
+   INPUT + BOTÃO
+   ===================================================== */
+
+.chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+
+.chat-input input:focus {
+  border-color: #ff7a00;
+}
+
+.btn-enviar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #ff7a00;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.btn-enviar:active {
+  transform: scale(0.95);
+}
+
+/* =====================================================
+   SCROLLBAR (OPCIONAL — MOBILE FRIENDLY)
+   ===================================================== */
+
+.chat-mensagens::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-mensagens::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+

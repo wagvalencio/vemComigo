@@ -1,0 +1,24 @@
+/* GARANTIA MÁXIMA DE ENQUADRAMENTO */
+#banner-area {
+  position: fixed !important;
+  bottom: 64px !important;
+  left: 0,5 !important;
+  right: 0,5 !important;
+  height: 100px !important;
+  overflow: hidden !important;
+  z-index: 100 !important;
+}
+
+#banner-area .banner-slide {
+  position: absolute !important;
+  width: 100% !important;
+  height: 100% !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+#banner-area .banner-slide.image {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}

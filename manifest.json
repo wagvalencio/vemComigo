@@ -1,0 +1,16 @@
+{
+  "name": "Vem Comigo",
+  "short_name": "VemComigo",
+  "start_url": "/splash.html",
+  "display": "standalone",
+  "background_color": "#FF7A00",
+  "theme_color": "#FF7A00",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

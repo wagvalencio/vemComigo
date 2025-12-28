@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#FF7A00">
+<link rel="stylesheet" href="/public/css/banner-fix-final.css">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vem Comigo</title>
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#ff7a00" />
+<!-- CSS -->
+<link rel="stylesheet" href="/public/css/style.css" />
+</head>
+<body>
+
+<header id="app-header">
+  <div class="header-left">
+   <!-- <div class="logo"></div>-->
+<img src="/logo-vc-3d.svg" alt="Vem Comigo" class="header-logo">
+    <span class="app-name">Vem Comigo</span>
+  </div>
+</header>
+
+
+
+<!-- BANNER FIXO (ACIMA DO FOOTER) -->
+<section id="banner-area">
+
+<div class="banner-slide image" style="background-image:url('https://tireabundadosofa.com.br/wp-content/uploads/2017/06/o-que-fazer-em-itapoa.png')">
+  <span class="banner-tag">Patrocinado</span>
+</div>
+
+  <div class="banner-slide active image" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee')">
+    <span class="banner-tag">Patrocinado</span>
+  </div>
+
+  <div class="banner-slide text orange-blue">
+    <span class="banner-tag">Patrocinado</span>
+    <strong>Promoção de fim de ano</strong>
+    <span>Já escolheu seu novo destino?</span>
+  </div>
+
+  <div class="banner-slide image" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')">
+    <span class="banner-tag">Patrocinado</span>
+  </div>
+
+  <div class="banner-slide text green">
+    <span class="banner-tag">Patrocinado</span>
+    <strong>Viajar é viver</strong>
+    <span>Descubra novos caminhos hoje</span>
+  </div>
+
+  <div class="banner-slide image" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWbZ_a93b4A85r2jVq8msMCL0ydEoOJ-QPRTER-IaFS2ZCPGWMOh7GIp0&s=10')">
+    <span class="banner-tag">Patrocinado</span>
+  </div>
+
+  <div class="banner-slide text blue">
+    <span class="banner-tag">Patrocinado</span>
+    <strong>Turismo acessível</strong>
+    <span>Caronas seguras e econômicas</span>
+  </div>
+</section>
+
+
+ <!-- APP ROOT -->
+<div id="app"></div>
+
+<!-- FOOTER FIXO (estrutura apenas) -->
+
+<footer id="footer">
+  <button data-route="buscar">
+    <span class="icon">🔍</span>
+    <span>Buscar</span>
+  </button>
+
+  <button data-route="oferecer">
+    <span class="icon">🚗</span>
+    <span>Oferecer</span>
+  </button>
+
+  <button data-route="viagens">
+    <span class="icon">🧾</span>
+    <span>Viagens</span>
+  </button>
+
+  <button data-route="mensagens">
+    <span class="icon">💬</span>
+    <span>Mensagens</span>
+  </button>
+
+  <button data-route="perfil">
+    <span class="icon">👤</span>
+    <span>Perfil</span>
+  </button>
+</footer>
+
+<!-- SUPABASE SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- AUTH -->
+<script src="/public/js/auth.js"></script>
+
+<!-- APP -->
+<script src="/public/js/app.js"></script>
+
+
+
+<!-- Script para Banners Dinâmicos do Supabase -->
+<script src="/public/js/banners-supabase.js"></script>
+
+
+<script>
+//   const slides = document.querySelectorAll('.banner-slide');
+//   let index = 0;
+// 
+//   setInterval(() => {
+//     slides[index].classList.remove('active');
+//     index = (index + 1) % slides.length;
+//     slides[index].classList.add('active');
+//   }, 6000);
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js");
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+

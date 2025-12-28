@@ -1,0 +1,52 @@
+/* CORREÇÃO DE BANNERS DINÂMICOS - ALINHAMENTO PERFEITO */
+
+/* Garante que a área de banners mantenha os estilos originais */
+section#banner-area {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Estilo EXATO dos slides (igual ao original) */
+.banner-slide.image {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 800px !important; /* Largura máxima */
+  height: 200px !important;
+  margin: 0 auto 10px auto !important; /* Centraliza */
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  display: block !important;
+}
+
+/* Container principal deve centralizar */
+main, .container, #app > div {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+/* Indicador visual (debug) */
+.banner-tag[style*="DINÂMICO"] {
+  position: absolute !important;
+  top: 15px !important;
+  right: 15px !important;
+  z-index: 10 !important;
+}
+
+/* Conteúdo do banner centralizado */
+.banner-content {
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 20px !important;
+  right: 20px !important;
+  color: white !important;
+  text-align: left !important;
+}

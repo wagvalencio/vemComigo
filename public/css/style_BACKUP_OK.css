@@ -1,0 +1,1048 @@
+/* =====================================================
+   BLOCO 1 — BASE VISUAL (RECUPERAÇÃO)
+   Cards • Botões • Inputs • Avatar
+===================================================== */
+
+/* Página base */
+.page,
+.page-container {
+  padding: 16px;
+  padding-bottom: 90px; /* respeita footer fixo */
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* Títulos */
+.page-title,
+h1, h2, h3 {
+  margin-bottom: 12px;
+  font-weight: 700;
+  color: var(--cor-texto-escuro);
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 14px 14px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  background: #fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 2px rgba(255,122,0,0.15);
+}
+
+/* Botões — padrão arredondado */
+button,
+.btn-primary,
+.btn-danger,
+.btn-outline {
+  border-radius: 999px;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+/* Botão principal */
+.btn-primary {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.btn-primary:active {
+  opacity: 0.9;
+}
+
+/* Botão perigo */
+.btn-danger {
+  background: #e53935;
+  color: #fff;
+}
+
+/* Botão outline */
+.btn-outline {
+  background: #fff;
+  color: var(--cor-primaria);
+  border: 2px solid var(--cor-primaria);
+}
+
+/* Botão largura total */
+button.full,
+.btn-primary.full,
+.btn-danger.full {
+  width: 100%;
+}
+
+/* Avatar com iniciais */
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7a00, #0057ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 auto 12px;
+}
+
+.avatar.small {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
+}
+
+/* Avatar em listas */
+.avatar-list {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7a00, #0057ff);
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Texto auxiliar */
+.text-muted {
+  color: #777;
+  font-size: 14px;
+}/
+
+
+/* =====================================================
+   VARIÁVEIS GLOBAIS
+===================================================== */
+:root {
+  --cor-primaria: #ff7a00;
+  --cor-secundaria: #0057ff;
+  --cor-fundo-roxo: linear-gradient(180deg, #4b4ac8 0%, #6a5acd 100%);
+  --branco: #ffffff;
+  --preto: #111827;
+  --cinza: #6b7280;
+  --cinza-claro: #e5e7eb;
+}
+
+/* =====================================================
+   RESET
+===================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--cor-fundo-roxo);
+}
+
+/* =====================================================
+   APP
+===================================================== */
+#app {
+  min-height: calc(100vh - 64px);
+  padding: 72px 16px 140px;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+#app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--branco);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+  z-index: 1000;
+}
+
+.logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--cor-primaria);
+}
+
+.app-name {
+  font-weight: 600;
+  color: var(--cor-primaria);
+}
+
+/* =====================================================
+   FOOTER FIXO
+===================================================== */
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(255,255,255,.98);
+  border-top: 1px solid var(--cinza-claro);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+}
+
+#footer button {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
+  color: var(--cinza);
+}
+
+#footer button.active {
+  color: var(--cor-primaria);
+}
+
+#footer button span:first-child {
+  font-size: 22px;
+}
+
+/* =====================================================
+   BANNER FIXO DO RODAPÉ
+===================================================== */
+#footer-ad {
+  position: fixed;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 90px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff7a00, #ff9f43);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+  z-index: 999;
+}
+
+#footer-ad img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+.card {
+  background: var(--branco);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.card h2 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* =====================================================
+   INPUTS
+===================================================== */
+.card input,
+.card select,
+.card textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--cinza-claro);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.card input:focus {
+  outline: none;
+  border-color: var(--cor-primaria);
+}
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: #fff;
+}
+
+/* =====================================================
+   AVATAR (INICIAIS)
+===================================================== */
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+/* =====================================================
+   CHAT / MENSAGENS
+===================================================== */
+.chat-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border-bottom: 1px solid var(--cinza-claro);
+}
+
+.chat-info {
+  flex: 1;
+}
+
+.chat-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.chat-last {
+  font-size: 13px;
+  color: var(--cinza);
+}
+
+/* =====================================================
+   VIAGEM
+===================================================== */
+.viagem-card {
+  border-left: 6px solid var(--cor-secundaria);
+}
+
+.viagem-card.destaque {
+  border-left-color: var(--cor-primaria);
+  background: #fff7ed;
+}
+
+/* =====================================================
+   AVATAR — PERFIL, CHAT, LISTAS
+===================================================== */
+
+.avatar,
+.avatar-perfil,
+.avatar-list {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: #ff7a00;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.avatar-perfil {
+  width: 72px;
+  height: 72px;
+  font-size: 22px;
+  margin: 0 auto 12px;
+}
+/* =====================================================
+   AVATAR — PERFIL, CHAT, LISTAS
+===================================================== */
+
+.avatar,
+.avatar-perfil,
+.avatar-list {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: #ff7a00;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.avatar-perfil {
+  width: 72px;
+  height: 72px;
+  font-size: 22px;
+  margin: 0 auto 12px;
+}
+/* =====================================================
+   AVATAR COM INICIAIS (GRADIENTE)
+===================================================== */
+
+.avatar-perfil {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7a00, #0057ff);
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+/* =====================================================
+   BANNER PATROCINADO (IMAGEM GRANDE)
+===================================================== */
+
+.banner-patrocinado {
+  margin: 16px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+}
+
+.banner-patrocinado img {
+  width: 100%;
+  display: block;
+}
+
+.banner-patrocinado .tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+/* =====================================================
+   BANNER FIXO DE PUBLICIDADE (RODAPÉ)
+===================================================== */
+
+.banner-fixo {
+  position: fixed;
+  bottom: 60px; /* acima do footer */
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #ff7a00, #ffb347);
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  font-weight: 600;
+  z-index: 999;
+}
+
+.banner-fixo span {
+  display: block;
+  font-size: 14px;
+}
+
+  GNU nano 8.7                                                                                                 public/css/style.css
+/* Reset e configurações globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Cores principais */
+    --orange: #FF7A00;
+    --orange-light: #FF9A3D;
+    --orange-dark: #E56B00;
+    --blue: #0057FF;
+    --blue-light: #3D7BFF;
+    --blue-dark: #0046CC;
+    --purple: #6A11CB;
+    --purple-light: #8A3BFF;
+    --gradient: linear-gradient(135deg, var(--orange) 0%, var(--blue) 50%, var(--purple) 100%);
+
+    /* Cores neutras */
+    --white: #FFFFFF;
+    --light: #F8F9FA;
+    --gray-light: #E9ECEF;
+    --gray: #6C757D;
+    --gray-dark: #343A40;
+    --black: #212529;
+
+    /* Sombras */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+
+    /* Bordas arredondadas */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 30px;
+
+    /* Espaçamentos */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-xxl: 48px;
+}
+
+body {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--light);
+    color: var(--gray-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.app-container {
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--white);
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 80px;
+}
+
+/* Header */
+.app-header {
+    background: var(--gradient);
+    color: var(--white);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-md);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.logo span {
+    font-weight: 300;
+}
+
+.user-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.btn-login, .btn-register, .btn-profile, .btn-logout {
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-login {
+    background: transparent;
+    border: 2px solid var(--white);
+    color: var(--white);
+}
+
+.btn-register {
+    background: var(--white);
+    color: var(--orange);
+    border: 2px solid var(--white);
+}
+
+.btn-profile {
+    background: var(--white);
+    color: var(--blue);
+    border: 2px solid var(--white);
+}
+
+.btn-logout {
+    background: transparent;
+    border: 2px solid var(--white);
+    color: var(--white);
+    cursor: pointer;
+}
+.btn-login:hover, .btn-logout:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-register:hover, .btn-profile:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Conteúdo principal */
+.main-content {
+    padding: var(--space-md);
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: var(--space-lg);
+    color: var(--gray-dark);
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--gradient);
+    border-radius: 2px;
+}
+
+/* Banner promocional */
+.promo-banner {
+    background: var(--gradient);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    color: var(--white);
+    text-align: center;
+}
+
+.promo-banner h2 {
+    font-size: 22px;
+    margin-bottom: var(--space-sm);
+    font-weight: 600;
+}
+
+.promo-banner p {
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+/* Cards de busca */
+.search-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-light);
+}
+
+.form-group {
+    margin-bottom: var(--space-lg);
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    font-weight: 500;
+    color: var(--gray-dark);
+}
+
+.form-group .icon {
+    font-size: 18px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: var(--space-md);
+    border: 2px solid var(--gray-light);
+    border-radius: var(--radius-lg);
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.1);
+}
+
+/* Botões */
+.btn-primary, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: var(--space-md);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-primary {
+    background: var(--gradient);
+    color: var(--white);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: var(--gray-light);
+    color: var(--gray-dark);
+}
+
+.btn-secondary:hover {
+    background: var(--gray);
+    color: var(--white);
+}
+
+/* Cards de viagem */
+.trips-grid {
+    display: grid;
+    gap: var(--space-md);                                                                                                  margin-bottom: var(--space-xl);
+}
+
+.trip-card {
+    background: var(--white);                                                                                              border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-light);
+    transition: all 0.3s ease;
+}
+.trip-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.trip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+}
+
+.trip-route {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-weight: 600;
+}
+
+.route-line {
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.trip-price {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--orange);
+    background: linear-gradient(135deg, var(--orange), var(--orange-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+
+.trip-details {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+}
+
+.trip-details > div {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 14px;
+    color: var(--gray);
+}
+
+.trip-details .icon {
+    font-size: 16px;
+}
+
+.trip-actions {
+    display: flex;
+    gap: var(--space-md);                                                                                              }
+
+.trip-actions .btn-primary,
+.trip-actions .btn-secondary {
+    flex: 1;
+    padding: var(--space-sm);
+    font-size: 14px;
+}
+
+/* Como funciona */
+.how-it-works {
+    margin-bottom: var(--space-xl);
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+}
+
+.step {
+    text-align: center;
+    padding: var(--space-md);
+
+
+.step-icon {
+    width: 50px;                                                                                                           height: 50px;
+    background: var(--gradient);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-sm);
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.step h3 {
+    font-size: 16px;
+    margin-bottom: var(--space-xs);
+    color: var(--gray-dark);
+}
+
+.step p {
+    font-size: 12px;
+    color: var(--gray);
+}
+
+/* Banner de publicidade */
+.ad-banner {
+    position: fixed;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    padding: var(--space-sm);
+    border-top: 1px solid var(--gray-light);
+    z-index: 100;
+}
+
+.ad-link {
+    display: block;
+    text-decoration: none;
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.ad-link img {
+    width: 100%;
+    height: 60px;
+    object-fit: cover;
+    display: block;
+}
+
+.ad-label {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 10px;
+}
+
+/* Footer Navigation */
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--gray-light);
+    padding: var(--space-sm) 0;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--gray);
+    transition: all 0.3s ease;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-md);                                                                                       flex: 1;
+    max-width: 80px;
+}
+
+.nav-item:hover {
+    background: var(--gray-light);
+}
+
+.nav-item.active {
+    color: var(--blue);
+}
+
+.nav-item.active .nav-icon {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: scale(1.1);
+}
+
+.nav-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.nav-label {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* Estados de não encontrado */
+.no-trips {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--gray);
+}
+
+.no-trips .icon {
+    font-size: 48px;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .app-container {
+        border-radius: 0;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+
+    .trip-actions {
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 768px) {
+    .app-container {
+        max-width: 768px;
+    }
+
+.trips-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.trip-card, .search-card, .promo-banner {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Estados de loading */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Scroll personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gray-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--blue);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--blue-dark);
+}
+
+
