@@ -1,7 +1,9 @@
 /*alert('app.js carregou');*/
 
 window.usuarioLogado = null;
-
+/* =====================================================
+   RESTAURAR SESSÃO
+===================================================== */
 async function restaurarSessao() {
   const { data } = await supabase.auth.getUser();
   window.usuarioLogado = data?.user ?? null;
@@ -89,6 +91,9 @@ async function renderBuscar() {
   };
 }
 
+/* =====================================================
+   CARREGAR VIAGENS DISPONIVEIS
+===================================================== */
 async function carregarViagensDisponiveis(container) {
   const hoje = new Date().toISOString().split("T")[0];
 
@@ -702,35 +707,6 @@ function iniciarRealtimeChatGlobal() {
     });
 }
 
-/*function iniciarRealtimeChatGlobal() {
-  // COPIA EXATA do chat privado, só mudando o filtro
-  if (window.chatGlobalSubscription) {
-    supabase.removeChannel(window.chatGlobalSubscription);
-  }
-
-  window.chatGlobalSubscription = supabase
-    .channel('chat-global')  // Nome diferente para não conflitar
-    .on(
-      'postgres_changes',
-      {
-        event: 'INSERT',
-        schema: 'public',
-        table: 'mensagens',
-        filter: 'solicitacao_id=is.null'  // ÚNICA DIFERENÇA: filtro para global
-      },
-      payload => {
-        // Chama a função que mostra mensagens no chat global
-        adicionarMensagemGlobal(payload.new);
-        scrollChatFinalGlobal();
-      }
-    )
-    .subscribe();
-}
-*/
-
-
-
-
 function adicionarMensagemGlobal(msg) {
   const container = document.getElementById('chat-global-mensagens');
   if (!container) return;
@@ -1158,134 +1134,6 @@ window.enviarMensagemGlobal = enviarMensagemGlobal;
 
 
 
-
-/* =====================================================
-   VERIFICAÇÃO RÁPIDA - SÓ PARA DEBUG
-===================================================== */
-/*async function verificarChat() {
-  alert('Verificando chat...');
-  
-  // 1. Verifica usuário
-  if (!window.usuarioLogado) {
-    alert('❌ Não logado');
-    return;
-  }
-  
-  alert(`✅ Logado como: ${window.usuarioLogado.email}`);
-  
-  // 2. Verifica mensagens no BD
-  const { data, error } = await supabase
-    .from('mensagens')
-    .select('count(*)')
-    .or('tipo.eq.global,solicitacao_id.is.null');
-  
-  if (error) {
-    alert(`❌ Erro BD: ${error.message}`);
-  } else {
-    alert(`✅ Mensagens globais: ${data[0]?.count || 0}`);
-  }
-}
-
-/* =====================================================
-   CHAT GLOBAL
-===================================================== */
-/*async function renderChatGlobal() {
-  if (!(await exigirLogin())) return;
-
-  app.innerHTML = `
-    <div class="page chat-page">
-      <header class="chat-header">
-        <button onclick="renderMensagens()">⬅ Voltar</button>
-        <h3>💬 Chat Global</h3>
-      </header>
-      <div id="chat-global-mensagens" class="chat-mensagens">
-        <p style="text-align:center; padding:20px;">Carregando mensagens...</p>
-      </div>
-      <div class="chat-input">
-        <input id="chat-global-texto" placeholder="Digite sua mensagem..." autocomplete="off" />
-        <button id="btn-enviar-global" class="btn-enviar">Enviar</button>
-      </div>
-    </div>
-  `;
-
-  // Carrega mensagens
-  await carregarMensagensGlobais();
-  
-  // Configura envio
-  document.getElementById('btn-enviar-global').onclick = async () => {
-    const input = document.getElementById('chat-global-texto');
-    const texto = input.value.trim();
-    if (!texto) return;
-
-    const { data: userData } = await supabase.auth.getUser();
-    
-    // Usa a tabela existente de mensagens
-    await supabase.from('mensagens').insert({
-      solicitacao_id: 'global', // ID especial para global
-      sender_id: userData.user.id,
-      mensagem: texto
-    });
-
-    input.value = '';
-    // Recarrega mensagens
-    await carregarMensagensGlobais();
-  };
-}
-
-async function carregarMensagensGlobais() {
-  const { data, error } = await supabase
-    .from('mensagens')
-    .select(`
-      *,
-      profiles:nome
-    `)
-    .eq('solicitacao_id', 'global')
-    .order('created_at', { ascending: true });
-
-  if (error) {
-    console.error(error);
-    const container = document.getElementById('chat-global-mensagens');
-    if (container) {
-      container.innerHTML = '<p style="text-align:center; padding:20px;">Erro ao carregar mensagens.</p>';
-    }
-    return;
-  }
-
-  const container = document.getElementById('chat-global-mensagens');
-  if (!container) return;
-
-  container.innerHTML = '';
-
-  if (!data || data.length === 0) {
-    container.innerHTML = '<p style="text-align:center; padding:20px;">Nenhuma mensagem ainda. Seja o primeiro a falar!</p>';
-    return;
-  }
-
-  data.forEach(msg => {
-    const div = document.createElement('div');
-    const isMinha = msg.sender_id === window.usuarioLogado?.id;
-    div.className = `msg ${isMinha ? 'minha' : 'outra'}`;
-    
-    const hora = new Date(msg.created_at).toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-
-    div.innerHTML = `
-      <div class="msg-balao">
-        ${!isMinha && msg.profiles?.nome ? `<small><strong>${msg.profiles.nome}</strong></small><br>` : ''}
-        <span>${msg.mensagem}</span>
-        <small>${hora}</small>
-      </div>
-    `;
-    
-    container.appendChild(div);
-  });
-  
-  // Scroll para baixo
-  container.scrollTop = container.scrollHeight;
-}
-*/
 /* =====================================================
    DETALHE DA VIAGEM - CORRIGIDO
 ===================================================== */
@@ -1920,8 +1768,9 @@ function navegar(route) {
       renderPerfil();
       break;
     default:
-      renderBuscar();
-  }
+  window.location.hash = '#home';
+  renderHome();
+ }
 }
 
 // Inicialização do footer
@@ -1957,7 +1806,95 @@ async function exigirLogin() {
   return true;
 }
 
+/* =====================================================
+   RENDER HOME
+======================================================= */
 function renderHome() {
+  app.innerHTML = `
+    <div class="page home">
+
+      <section class="home-hero">
+        <div class="home-logo">
+          <div class="logo-circle">🚘</div>
+          <h1>Vem Comigo</h1>
+          <p>Caronas seguras e econômicas</p>
+        </div>
+      </section>
+
+      <section class="home-card">
+        <h2>Bem-vindo ao Vem Comigo!</h2>
+        <p class="home-sub">
+          Encontre ou ofereça caronas com segurança e economia.
+        </p>
+
+        <div class="home-stats">
+          <div class="stat">
+            <strong>1.234+</strong>
+            <span>Viajantes</span>
+          </div>
+          <div class="stat">
+            <strong>5.678+</strong>
+            <span>Viagens</span>
+          </div>
+          <div class="stat">
+            <strong>4.8</strong>
+            <span>Avaliação</span>
+          </div>
+          <div class="stat">
+            <strong>70%</strong>
+            <span>Economia</span>
+          </div>
+        </div>
+
+        <div class="home-actions">
+          <button class="btn green" onclick="location.hash='buscar'">
+            🔍 Buscar Viagens
+          </button>
+          <button class="btn orange" onclick="location.hash='oferecer'">
+            🚘 Oferecer Carona
+          </button>
+        </div>
+      </section>
+
+      <section class="home-card">
+        <h3>Por que escolher o Vem Comigo?</h3>
+
+        <div class="home-features">
+          <div class="feature">
+            🛡️
+            <strong>Segurança</strong>
+            <span>Perfis verificados</span>
+          </div>
+          <div class="feature">
+            💰
+            <strong>Economia</strong>
+            <span>Até 70% mais barato</span>
+          </div>
+          <div class="feature">
+            🌱
+            <strong>Sustentável</strong>
+            <span>Menos emissões</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-card">
+        <h3>Acesso rápido</h3>
+
+        <div class="home-quick">
+          <button class="quick-btn">📲 Instalar App</button>
+          <button class="quick-btn">📍 Viagens Próximas</button>
+          <button class="quick-btn">➕ Nova Viagem</button>
+          <button class="quick-btn">⚙️ Administração</button>
+        </div>
+      </section>
+
+    </div>
+  `;
+}
+
+
+/*function renderHome() {
   app.innerHTML = `
     <div class="page home">
       <section class="home-hero">
@@ -1983,7 +1920,7 @@ function renderHome() {
       </section>
     </div>
   `;
-}
+}*/
 
 function renderQueroSerMotorista() {
   app.innerHTML = `
