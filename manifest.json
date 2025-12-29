@@ -10,12 +10,6 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/img/2_20251229_010724_0001.png",
-      "sizes": "any",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
       "src": "/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
@@ -27,5 +21,5 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
-}
+   ]
+  }
