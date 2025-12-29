@@ -2,7 +2,7 @@
   "name": "Vem Comigo",
   "short_name": "VemComigo",
   "description": "Aplicativo de caronas compartilhadas",
-  "start_url": "/splash.html",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#FF7A00",
