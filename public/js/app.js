@@ -1755,7 +1755,7 @@ function renderLogin() {
     <section class="page-container">
       <div class="card">
         <div class="login-logo">
-          <img src="/logo-vc-3d.svg" alt="Vem Comigo">
+          <img src="/icons/icon-512.png" alt="Vem Comigo">
         </div>
         <h2 class="page-title">Entrar</h2>
         <input id="login-email" type="email" placeholder="Email" />
