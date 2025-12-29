@@ -15,7 +15,15 @@
 <link rel="stylesheet" href="/public/css/style.css" />
 </head>
 <body>
-
+<!-- Splash visual (HTML) -->
+<div id="html-splash" style="
+  position: fixed;
+  inset: 0;
+  background: url('assets/images/Splash_Amigos_VemComigo.png') no-repeat center center;
+  background-size: cover;
+  z-index: 9999;
+  display: none;
+"></div>
 <header id="app-header">
   <div class="header-left">
    <!-- <div class="logo"></div>-->
@@ -135,6 +143,27 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
   });
 }
+</script>
+
+<script>
+  (function () {
+    const splash = document.getElementById('html-splash');
+
+    // Detecta se está rodando como PWA instalado
+    const isPWA =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+
+    if (isPWA) {
+      // Mostra splash visual somente no app instalado
+      splash.style.display = 'block';
+
+      // Tempo do splash (em ms)
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 3000); // 3 segundos
+    }
+  })();
 </script>
 
 </body>
