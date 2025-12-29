@@ -1,38 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <meta name="theme-color" content="#FF7A00">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vem Comigo</title>
 
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background-color: #ff7a00; /* fallback */
+    }
+
+    .splash {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
       height: 100vh;
-      background: #FF7A00;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    img {
-      width: 180px;
-      animation: fadeIn 1.2s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
+
+    .splash img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* FULL SCREEN sem distorcer */
     }
   </style>
+</head>
+<body>
+
+  <div class="splash">
+    <img src="/assets/images/Splash_Amigos_VemComigo.png" alt="Vem Comigo">
+  </div>
 
   <script>
     setTimeout(() => {
-      window.location.href = "/index.html";
-    }, 3000);
+      window.location.href = "/";
+    }, 3500);
   </script>
-</head>
-<body>
-<img src="img/2_20251229_010724_0001.png" alt="Vem Comigo" class="logo">
-<!--  <img src="/icons/icon-512.png" alt="Vem Comigo" class="logo-splash">-->
+
 </body>
 </html>
