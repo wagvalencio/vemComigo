@@ -10,9 +10,9 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/img/2_20251229_010724_0001.png",
       "sizes": "any",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
