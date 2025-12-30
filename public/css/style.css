@@ -1668,3 +1668,9 @@ div:has(> .form-group > #hora) .form-group {
   border-radius: 3px;
 }
 
+.app-version {
+  position: absolute;
+  bottom: 20px;
+  font-size: 14px;
+  opacity: 0.7;
+}

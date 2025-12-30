@@ -19,7 +19,7 @@
     }
 
     body {
-      background-color: #ff7a00; /* fallback */
+      background-color: #ff7a00;
     }
 
     .splash {
@@ -32,7 +32,18 @@
     .splash img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* FULL SCREEN sem distorcer */
+      object-fit: cover;
+    }
+
+    .app-version {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      font-family: Arial, sans-serif;
+      z-index: 10;
     }
   </style>
 </head>
@@ -40,8 +51,17 @@
 
   <div class="splash">
     <img src="/assets/images/Splash_Amigos_VemComigo.png" alt="Vem Comigo">
+    <div class="app-version" id="appVersion"></div>
   </div>
 
+  <!-- Versão do app -->
+  <script src="/js/version.js"></script>
+  <script>
+    document.getElementById("appVersion").innerText =
+      "Versão " + APP_VERSION;
+  </script>
+
+  <!-- Redirecionamento -->
   <script>
     setTimeout(() => {
       window.location.href = "/";
