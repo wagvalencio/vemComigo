@@ -22,7 +22,7 @@ const FILES_TO_CACHE = [
   "/index.html",
   "/splash.html",
   "/favicon.svg",
-  "/icons/icon-192.png",
+  "/icons/icon-512.png",
   "/manifest.json",
   "/public/css/style.css",
   "/public/js/app.js"
