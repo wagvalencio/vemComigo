@@ -838,302 +838,6 @@ window.enviarMensagemGlobal = enviarMensagemGlobal;
 
 
 
-
-/* =====================================================
-   CHAT GLOBAL - VOLTANDO AO QUE FUNCIONAVA
-===================================================== */
-/*async function renderChatGlobal() {
-  if (!(await exigirLogin())) return;
-
-  app.innerHTML = `
-    <div class="page">
-      <h1>💬 Chat Global</h1>
-      
-      <div id="chat-global-container">
-        <div id="chat-global-mensagens" class="chat-mensagens">
-          <p style="text-align:center; padding:20px;">Carregando mensagens...</p>
-        </div>
-        
-        <div class="chat-input">
-          <input 
-            id="chat-global-texto" 
-            placeholder="Digite sua mensagem..." 
-            autocomplete="off"
-          />
-          <button onclick="enviarMensagemChatGlobal()" class="btn-primary">
-            Enviar
-          </button>
-        </div>
-      </div>
-      
-      <div style="text-align:center; margin-top:15px;">
-        <button onclick="renderMensagens()" class="btn-secondary">
-          ⬅ Voltar para Mensagens
-        </button>
-      </div>
-    </div>
-  `;
-
-  // Carrega mensagens
-  await carregarMensagensChatGlobal();
-}
-
-
-/* =====================================================
-   CARREGAR MENSAGENS - CORRIGIDA PARA CARREGAR DE UMA VEZ
-===================================================== */
-/*async function carregarMensagensChatGlobal() {
-  try {
-    const container = document.getElementById('chat-global-mensagens');
-    if (!container) return;
-
-    // MOSTRA LOADING
-    container.innerHTML = '<p style="text-align:center; padding:20px;">Carregando...</p>';
-
-    // 1. BUSCA TODAS AS MENSAGENS DE UMA VEZ
-    const { data: todasMensagens, error } = await supabase
-      .from('mensagens')
-      .select('id, sender_id, mensagem, created_at, tipo, solicitacao_id')
-      .order('created_at', { ascending: true });
-
-    if (error) {
-      container.innerHTML = `<p style="color:red; text-align:center;">Erro: ${error.message}</p>`;
-      return;
-    }
-
-    // Se não tem mensagens
-    if (!todasMensagens || todasMensagens.length === 0) {
-      container.innerHTML = '<p style="text-align:center; padding:20px;">💬 Nenhuma mensagem</p>';
-      return;
-    }
-
-    // 2. FILTRA AS GLOBAIS
-    const mensagensGlobais = todasMensagens.filter(msg => 
-      msg.tipo === 'global' || msg.solicitacao_id === null
-    );
-
-    if (mensagensGlobais.length === 0) {
-      container.innerHTML = '<p style="text-align:center; padding:20px;">💬 Nenhuma mensagem global</p>';
-      return;
-    }
-
-    // 3. BUSCA TODOS OS NOMES DE UMA VEZ (performance)
-    const idsUnicos = [...new Set(mensagensGlobais.map(msg => msg.sender_id))];
-    const nomesUsuarios = {};
-    
-    try {
-      // Busca todos os perfis de uma vez
-      const { data: perfis } = await supabase
-        .from('profiles')
-        .select('id, nome')
-        .in('id', idsUnicos);
-      
-      // Cria mapa de IDs para nomes
-      if (perfis) {
-        perfis.forEach(perfil => {
-          nomesUsuarios[perfil.id] = perfil.nome || 'Usuário';
-        });
-      }
-    } catch (e) {
-      console.log('Erro ao buscar nomes:', e);
-    }
-
-    // 4. RENDERIZA TODAS DE UMA VEZ
-    container.innerHTML = ''; // Limpa tudo de uma vez
-    
-    const fragment = document.createDocumentFragment(); // Para melhor performance
-    
-    mensagensGlobais.forEach(msg => {
-      const isMinha = msg.sender_id === window.usuarioLogado?.id;
-      
-      // Pega o nome (já buscado antes)
-      let nome = isMinha ? 'Você' : (nomesUsuarios[msg.sender_id] || 'Usuário');
-      
-      const hora = new Date(msg.created_at).toLocaleTimeString('pt-BR', {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-
-      const msgDiv = document.createElement('div');
-      msgDiv.style.marginBottom = '10px';
-      msgDiv.style.display = 'flex';
-      msgDiv.style.justifyContent = isMinha ? 'flex-end' : 'flex-start';
-      
-      const balao = document.createElement('div');
-      balao.style.padding = '10px 15px';
-      balao.style.borderRadius = '15px';
-      balao.style.maxWidth = '80%';
-      balao.style.wordBreak = 'break-word';
-      
-      if (isMinha) {
-        // MINHA - DIREITA
-        balao.style.background = '#007bff';
-        balao.style.color = 'white';
-        balao.style.borderBottomRightRadius = '5px';
-        balao.innerHTML = `
-          <div>${msg.mensagem}</div>
-          <div style="font-size:11px; text-align:right; margin-top:3px; opacity:0.8;">${hora}</div>
-        `;
-      } else {
-        // OUTRA PESSOA - ESQUERDA
-        balao.style.background = 'white';
-        balao.style.border = '1px solid #ddd';
-        balao.style.borderBottomLeftRadius = '5px';
-        balao.innerHTML = `
-          <div style="font-weight:bold; font-size:12px; margin-bottom:2px;">${nome}</div>
-          <div>${msg.mensagem}</div>
-          <div style="font-size:11px; text-align:right; margin-top:3px; color:#666;">${hora}</div>
-        `;
-      }
-      
-      msgDiv.appendChild(balao);
-      fragment.appendChild(msgDiv);
-    });
-    
-    // Adiciona tudo de uma vez ao container
-    container.appendChild(fragment);
-    
-    // Scroll para baixo (uma vez só)
-    container.scrollTop = container.scrollHeight;
-
-  } catch (err) {
-    const container = document.getElementById('chat-global-mensagens');
-    if (container) {
-      container.innerHTML = `<p style="color:red; text-align:center;">Erro: ${err.message}</p>`;
-    }
-  }
-}
-
-
-
-
-
-
-
-/* =====================================================
-   ENVIAR MENSAGEM - VERSÃO MAIS SIMPLES
-===================================================== */
-/*async function enviarMensagemChatGlobal() {
-  const input = document.getElementById('chat-global-texto');
-  if (!input) return;
-  
-  const texto = input.value.trim();
-  if (!texto) return;
-  
-  if (!window.usuarioLogado) {
-    alert('Faça login');
-    return;
-  }
-
-  // Salva o input e limpa
-  const textoParaEnviar = texto;
-  input.value = '';
-  input.focus();
-  
-  try {
-    // Envia para o servidor
-    const { data, error } = await supabase
-      .from('mensagens')
-      .insert({
-        sender_id: window.usuarioLogado.id,
-        mensagem: textoParaEnviar,
-        tipo: 'global',
-        solicitacao_id: null
-      })
-      .select()
-      .single(); // Retorna a mensagem criada
-
-    if (error) {
-      // Se der erro, devolve o texto ao input
-      input.value = textoParaEnviar;
-      alert('Erro: ' + error.message);
-      return;
-    }
-
-    // APENAS adiciona a nova mensagem (não recarrega tudo)
-    adicionarNovaMensagemApenas(data);
-    
-  } catch (err) {
-    input.value = textoParaEnviar;
-    alert('Erro: ' + err.message);
-  }
-}
-
-/* =====================================================
-   ADICIONAR APENAS NOVA MENSAGEM
-===================================================== */
-/*async function adicionarNovaMensagemApenas(mensagemData) {
-  const container = document.getElementById('chat-global-mensagens');
-  if (!container) return;
-  
-  const isMinha = mensagemData.sender_id === window.usuarioLogado?.id;
-  
-  // Busca nome se não for minha
-  let nome = 'Você';
-  if (!isMinha) {
-    try {
-      const { data: perfil } = await supabase
-        .from('profiles')
-        .select('nome')
-        .eq('id', mensagemData.sender_id)
-        .single();
-      
-      if (perfil?.nome) nome = perfil.nome;
-    } catch (e) {
-      nome = 'Usuário';
-    }
-  }
-
-  const hora = new Date(mensagemData.created_at).toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-
-  // Cria elemento
-  const msgDiv = document.createElement('div');
-  msgDiv.style.marginBottom = '10px';
-  msgDiv.style.display = 'flex';
-  msgDiv.style.justifyContent = isMinha ? 'flex-end' : 'flex-start';
-  
-  const balao = document.createElement('div');
-  balao.style.padding = '10px 15px';
-  balao.style.borderRadius = '15px';
-  balao.style.maxWidth = '80%';
-  balao.style.wordBreak = 'break-word';
-  
-  if (isMinha) {
-    // MINHA - DIREITA
-    balao.style.background = '#007bff';
-    balao.style.color = 'white';
-    balao.style.borderBottomRightRadius = '5px';
-    balao.innerHTML = `
-      <div>${mensagemData.mensagem}</div>
-      <div style="font-size:11px; text-align:right; margin-top:3px; opacity:0.8;">${hora}</div>
-    `;
-  } else {
-    // OUTRA PESSOA - ESQUERDA
-    balao.style.background = 'white';
-    balao.style.border = '1px solid #ddd';
-    balao.style.borderBottomLeftRadius = '5px';
-    balao.innerHTML = `
-      <div style="font-weight:bold; font-size:12px; margin-bottom:2px;">${nome}</div>
-      <div>${mensagemData.mensagem}</div>
-      <div style="font-size:11px; text-align:right; margin-top:3px; color:#666;">${hora}</div>
-    `;
-  }
-  
-  msgDiv.appendChild(balao);
-  container.appendChild(msgDiv);
-  
-  // Scroll para baixo
-  container.scrollTop = container.scrollHeight;
-}
-
-
-
-
-
-
 /* =====================================================
    DETALHE DA VIAGEM - CORRIGIDO
 ===================================================== */
@@ -1691,7 +1395,7 @@ async function handleCadastro() {
 }
 
 /* =====================================================
-   ROUTER - CORRIGIDO
+   ROUTER - CORRIGIDO E COM MENU HAMBÚRGUER
 ===================================================== */
 function router() {
   if (window.usuarioLogado === undefined) {
@@ -1732,12 +1436,19 @@ function router() {
     return renderChatViagem(solicitacaoId);
   }
 
+  // MENU HAMBÚRGUER
+  if (hash === 'menu-perfil') return renderPerfil();
+  if (hash === 'menu-sobre') return renderSobre();       // nova tela em desenvolvimento
+  if (hash === 'menu-config') return renderConfig();     // nova tela em desenvolvimento
+  if (hash === 'menu-como-funciona') return  renderComoFunciona();
+  if (hash === 'menu-termos') return  renderTermos();
   // fallback
   return renderHome();
 }
 
+
 /* =====================================================
-   FOOTER NAVEGAÇÃO - ATUALIZADO
+   FOOTER NAVEGAÇÃO + MENU HAMBÚRGUER
 ===================================================== */
 function setActiveFooter(route) {
   const footerBtns = document.querySelectorAll('#footer button');
@@ -1752,43 +1463,385 @@ function navegar(route) {
   setActiveFooter(route);
 
   switch (route) {
-    case 'buscar':
-      renderBuscar();
-      break;
-    case 'oferecer':
-      renderOferecer();
-      break;
-    case 'viagens':
-      renderViagens();
-      break;
-    case 'mensagens':
-      renderMensagens();
-      break;
-    case 'perfil':
-      renderPerfil();
-      break;
+    case 'buscar': return renderBuscar();
+    case 'oferecer': return renderOferecer();
+    case 'viagens': return renderViagens();
+    case 'mensagens': return renderMensagens();
+    case 'perfil': return renderPerfil();
+    // menu hambúrguer
+    case 'menu-perfil': return renderPerfil();
+    case 'menu-sobre': return renderSobre();
+    case 'menu-como-funciona': return renderComoFunciona();
+    case 'menu-termos': return renderTermos();
+    case 'menu-config': return renderConfig();
+
     default:
-  window.location.hash = '#home';
-  renderHome();
- }
+      window.location.hash = '#home';
+      return renderHome();
+  }
 }
 
-// Inicialização do footer
+// Inicialização
 document.addEventListener("DOMContentLoaded", () => {
+  // Footer
   const footerBtns = document.querySelectorAll('#footer button');
-  if (footerBtns.length > 0) {
-    footerBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        navegar(btn.dataset.route);
-      });
+  footerBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navegar(btn.dataset.route);
     });
-  }
-  
+  });
+
+  // Menu hambúrguer
+  const menuItems = document.querySelectorAll('#menu-hamburger li');
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      window.location.hash = '#' + item.dataset.route;
+      router();
+      closeHamburgerMenu(); // fecha o menu
+    });
+  });
+
   // Página inicial
   navegar('buscar');
 });
 
 
+function closeHamburgerMenu() {
+  const menu = document.getElementById('menu-hamburger');
+  if(menu) menu.classList.remove('active'); // assume que "active" abre o menu
+}
+
+
+function renderSobre() {
+  const app = document.getElementById('app');
+
+  app.innerHTML = `
+    <div style="padding:16px; padding-bottom:160px;">
+
+      <div style="
+        background:#fff;
+        border-radius:16px;
+        padding:20px;
+        box-shadow:0 6px 16px rgba(0,0,0,0.08);
+      ">
+
+        <!-- TÍTULO -->
+        <div style="text-align:center; margin-bottom:16px;">
+          <div style="font-size:42px;">🚗🤝</div>
+          <h2 style="margin:8px 0; color:#FF7A00;">Vem Comigo</h2>
+          <p style="color:#555; font-size:14px;">
+            Mobilidade colaborativa, justa e flexível
+          </p>
+        </div>
+
+        <!-- SOBRE -->
+        <p style="text-align:justify; font-size:14px; color:#333; line-height:1.6; margin-bottom:18px;">
+          O <strong>Vem Comigo</strong> é uma plataforma de caronas compartilhadas
+          que une o melhor dos aplicativos de mobilidade, oferecendo liberdade
+          total para motoristas e economia real para passageiros.
+          Diferente de outros serviços, aqui quem define as regras da viagem
+          são as próprias pessoas.
+        </p>
+
+        <!-- DIFERENCIAIS -->
+        <h3 style="color:#FF7A00; margin-bottom:10px;">🚀 Diferenciais do Vem Comigo</h3>
+
+        <div style="display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:18px;">
+
+          <div>
+            <strong>💰 Motorista define o valor</strong>
+            <p style="font-size:13px; color:#444; text-align:justify;">
+              No Vem Comigo, o motorista escolhe livremente o valor da carona.
+              Pode ser gratuito, simbólico ou conforme o custo desejado.
+              O aplicativo não interfere no preço.
+            </p>
+          </div>
+
+          <div>
+            <strong>👥 Corridas compartilhadas</strong>
+            <p style="font-size:13px; color:#444; text-align:justify;">
+              Diferente de apps tradicionais, os passageiros podem dividir o
+              trajeto com outras pessoas da mesma rota, reduzindo custos
+              e aproveitando melhor cada viagem.
+            </p>
+          </div>
+
+          <div>
+            <strong>📍 Rotas curtas e recorrentes</strong>
+            <p style="font-size:13px; color:#444; text-align:justify;">
+              Ideal para trajetos do dia a dia, como ir ao trabalho, faculdade
+              ou bairros próximos. É possível cadastrar rotas fixas,
+              com ida e volta, do jeito que a rotina exige.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- FUNCIONALIDADES -->
+        <h3 style="color:#FF7A00; margin-bottom:12px;">✨ Funcionalidades</h3>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+          gap:12px;
+          margin-bottom:20px;
+          text-align:center;
+        ">
+          <div>
+            <div style="font-size:26px;">🔍</div>
+            <small>Buscar caronas</small>
+          </div>
+          <div>
+            <div style="font-size:26px;">🚗</div>
+            <small>Oferecer viagens</small>
+          </div>
+          <div>
+            <div style="font-size:26px;">💬</div>
+            <small>Chat integrado</small>
+          </div>
+          <div>
+            <div style="font-size:26px;">🧾</div>
+            <small>Gerenciar viagens</small>
+          </div>
+        </div>
+
+        <!-- MISSÃO -->
+        <h3 style="color:#FF7A00; margin-bottom:8px;">🎯 Nossa missão</h3>
+        <p style="text-align:justify; font-size:14px; color:#333; line-height:1.6;">
+          Tornar a mobilidade mais acessível, humana e sustentável,
+          promovendo economia, compartilhamento e conexões reais
+          entre pessoas que seguem o mesmo caminho.
+        </p>
+
+        <!-- BENEFÍCIOS -->
+        <div style="
+          display:flex;
+          justify-content:space-around;
+          margin:18px 0;
+          text-align:center;
+        ">
+          <div><div style="font-size:22px;">💰</div><small>Mais barato</small></div>
+          <div><div style="font-size:22px;">✅</div><small>Perfis reais</small></div>
+          <div><div style="font-size:22px;">🌱</div><small>Sustentável</small></div>
+        </div>
+
+        <!-- VERSÃO -->
+        <div style="
+          margin-top:20px;
+          text-align:center;
+          font-size:12px;
+          color:#FF7A00;
+          opacity:0.9;
+        ">
+          Versão ${typeof APP_VERSION !== 'undefined' ? APP_VERSION : '1.0.0'}
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+/* =====================================================
+   CF-001 | RENDER COMO FUNCIONA
+   Tela institucional - Como funciona o Vem Comigo
+===================================================== */
+function renderComoFunciona() {
+  const app = document.getElementById('app');
+
+  app.innerHTML = `
+    <div class="page">
+
+      <div class="card" style="margin:12px 8px;">
+
+        <h2 style="
+          text-align:center;
+          color:#ff7a00;
+          margin-bottom:18px;
+        ">
+          Como funciona o<br>
+          <span style="font-weight:600;">Vem Comigo</span>
+        </h2>
+
+        <p style="
+          text-align:justify;
+          margin-bottom:14px;
+        ">
+          O <strong>Vem Comigo</strong> é um aplicativo de caronas e corridas compartilhadas
+          que conecta motoristas e passageiros que possuem rotas semelhantes,
+          seja para viagens curtas, longas, diárias ou ocasionais.
+        </p>
+
+        <p style="
+          text-align:justify;
+          margin-bottom:14px;
+        ">
+          Diferente de outros aplicativos, aqui o motorista tem total liberdade
+          para definir o valor que desejar por pessoa. O aplicativo não interfere
+          no preço, funcionando apenas como uma ponte entre quem oferece e quem
+          procura uma carona.
+        </p>
+
+        <p style="
+          text-align:justify;
+          margin-bottom:16px;
+        ">
+          Os passageiros visualizam a rota, o valor por pessoa e a quantidade de
+          vagas disponíveis, podendo aceitar ou não a proposta. O contato entre
+          motorista e passageiros pode ocorrer pelo chat para alinhar detalhes
+          como horários, pontos de encontro e outras combinações.
+        </p>
+
+        <div style="
+          margin-left:16px;
+          line-height:1.8;
+          margin-bottom:16px;
+        ">
+          <div>🚗 <strong>Rotas curtas ou longas</strong></div>
+          <div>📅 <strong>Viagens diárias ou ocasionais</strong></div>
+          <div>🏙️ <strong>Deslocamentos urbanos ou intermunicipais</strong></div>
+        </div>
+
+        <p style="text-align:justify;">
+          No <strong>Vem Comigo</strong>, você tem mais liberdade, transparência
+          e controle sobre suas viagens, tornando o deslocamento mais econômico,
+          social e acessível para todos.
+        </p>
+
+      </div>
+
+    </div>
+  `;
+}
+/* ===== FIM CF-001 | RENDER COMO FUNCIONA ===== */
+
+
+/* =====================================================
+   RENDER TERMOS DE USO + LGPD + RESPONSABILIDADE
+   Código: RTU-001
+===================================================== */
+function renderTermos() {
+  const app = document.getElementById('app');
+
+  app.innerHTML = `
+    <section style="padding:16px 16px 120px;">
+      <div style="
+        background:#fff;
+        border-radius:16px;
+        padding:20px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        max-width:720px;
+        margin:0 auto;
+      ">
+
+        <h2 style="
+          text-align:center;
+          color:#FF7A00;
+          margin-bottom:16px;
+        ">
+          Termos de Uso<br>
+          e Responsabilidade
+        </h2>
+
+        <p style="text-align:justify;">
+          O <strong>Vem Comigo</strong> é uma plataforma digital que conecta
+          motoristas e passageiros que compartilham rotas semelhantes,
+          facilitando a comunicação e o acordo entre as partes.
+        </p>
+
+        <h3 style="color:#FF7A00;margin-top:18px;">1. Natureza da Plataforma</h3>
+        <p style="text-align:justify;">
+          O Vem Comigo atua exclusivamente como <strong>intermediador tecnológico</strong>.
+          Não realiza transporte, não define preços, não intermedia pagamentos
+          e não possui qualquer participação financeira nas viagens.
+        </p>
+
+        <p style="text-align:justify;">
+          O valor da carona é <strong>definido livremente pelo motorista</strong>,
+          e o passageiro decide se aceita ou não aquele valor.
+          O aplicativo não interfere nessa negociação.
+        </p>
+
+        <h3 style="color:#FF7A00;margin-top:18px;">2. Sobre Valores e Viagens</h3>
+        <p style="text-align:justify;">
+          Cada viagem possui um valor <strong>por pessoa</strong>, de acordo com
+          a quantidade de vagas oferecidas no veículo.
+          A divisão do trajeto ocorre por múltiplos passageiros,
+          porém <strong>cada passageiro é responsável pelo seu próprio pagamento</strong>.
+        </p>
+
+        <p style="text-align:justify;">
+          O Vem Comigo permite rotas curtas, longas, urbanas,
+          intermunicipais, recorrentes ou ocasionais,
+          inclusive deslocamentos diários como trabalho, estudo ou rotina pessoal.
+        </p>
+
+        <h3 style="color:#FF7A00;margin-top:18px;">3. Responsabilidade</h3>
+        <p style="text-align:justify;">
+          O Vem Comigo <strong>não se responsabiliza</strong> por condutas,
+          atrasos, cancelamentos, acidentes, valores acordados,
+          comportamento dos usuários ou qualquer evento ocorrido durante a viagem.
+        </p>
+
+        <p style="text-align:justify;">
+          A responsabilidade é <strong>integralmente dos usuários envolvidos</strong>,
+          motoristas e passageiros, que devem agir com boa-fé,
+          respeito à legislação vigente e às normas de trânsito.
+        </p>
+
+        <h3 style="color:#FF7A00;margin-top:18px;">4. LGPD e Privacidade</h3>
+        <p style="text-align:justify;">
+          O Vem Comigo respeita a <strong>Lei Geral de Proteção de Dados (LGPD)</strong>.
+          Os dados fornecidos pelos usuários são utilizados exclusivamente
+          para o funcionamento da plataforma.
+        </p>
+
+        <p style="text-align:justify;">
+          Informações como nome, e-mail e dados de uso
+          <strong>não são vendidas nem compartilhadas</strong> com terceiros,
+          exceto quando exigido por lei ou ordem judicial.
+        </p>
+
+        <h3 style="color:#FF7A00;margin-top:18px;">5. Ausência de Vínculo Comercial</h3>
+        <p style="text-align:justify;">
+          O Vem Comigo não possui vínculo empregatício,
+          comercial ou societário com motoristas ou passageiros.
+          Trata-se de uma plataforma colaborativa de conexão entre usuários.
+        </p>
+
+        <h3 style="color:#FF7A00;margin-top:18px;">6. Aceitação dos Termos</h3>
+        <p style="text-align:justify;">
+          Ao utilizar o aplicativo, o usuário declara que leu,
+          compreendeu e concorda com todos os termos aqui descritos.
+        </p>
+
+        <p style="
+          margin-top:20px;
+          font-size:13px;
+          color:#777;
+          text-align:center;
+        ">
+          Vem Comigo · Plataforma colaborativa de caronas
+        </p>
+
+      </div>
+    </section>
+  `;
+}
+/* =====================================================
+   FIM — RENDER TERMOS DE USO
+===================================================== */
+
+
+function renderConfig() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div style="padding:20px;">
+      <h2>Configurações</h2>
+      <p>Em desenvolvimento.</p>
+      <p>Aqui futuramente você poderá alterar preferências do aplicativo.</p>
+    </div>
+  `;
+}
 
 
 /* =====================================================
@@ -1893,34 +1946,6 @@ function renderHome() {
   `;
 }
 
-
-/*function renderHome() {
-  app.innerHTML = `
-    <div class="page home">
-      <section class="home-hero">
-        <div class="home-logo">
-          <div class="logo-circle">🚘</div>
-          <h1>Vem Comigo</h1>
-          <p>Caronas seguras e econômicas</p>
-        </div>
-      </section>
-      <section class="home-card">
-        <h2>Bem-vindo ao Vem Comigo!</h2>
-        <p class="home-sub">Encontre ou ofereça caronas com segurança e economia.</p>
-        <div class="home-stats">
-          <div class="stat"><strong>1.234+</strong><span>Viajantes</span></div>
-          <div class="stat"><strong>5.678+</strong><span>Viagens</span></div>
-          <div class="stat"><strong>4.8</strong><span>Avaliação</span></div>
-          <div class="stat"><strong>70%</strong><span>Economia</span></div>
-        </div>
-        <div class="home-actions">
-          <button class="btn green" onclick="location.hash='buscar'">🔍 Buscar Viagens</button>
-          <button class="btn orange" onclick="location.hash='oferecer'">🚘 Oferecer Carona</button>
-        </div>
-      </section>
-    </div>
-  `;
-}*/
 
 function renderQueroSerMotorista() {
   app.innerHTML = `
@@ -2091,3 +2116,4 @@ window.renderQueroSerMotorista = renderQueroSerMotorista;
 
 // DEBUG: Força versão
 console.log("🔄 APP.JS ATUALIZADO - " + new Date().toISOString());
+

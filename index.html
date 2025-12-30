@@ -1,180 +1,244 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vem Comigo</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vem Comigo</title>
 
-  <!-- Ícone e Manifest -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#FF7A00">
+<link rel="icon" type="image/png" href="/icons/icon-192.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#FF7A00">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="/public/css/banner-fix-final.css">
-  <link rel="stylesheet" href="/public/css/style.css">
+<!-- CSS -->
+<link rel="stylesheet" href="/public/css/style.css">
+<link rel="stylesheet" href="/public/css/banner-fix-final.css">
 
-  <!-- Splash CSS e versão embutida -->
-  <style>
-    /* Splash fullscreen com fade */
-    #html-splash {
-      position: fixed;
-      inset: 0;
-      background: url('assets/images/Splash_Amigos_VemComigo.png') no-repeat center center;
-      background-size: cover;
-      z-index: 9999;
-      display: none;
-      opacity: 1;
-      transition: opacity 0.5s ease;
-    }
+<style>
+  /* Menu hambúrguer flutuante */
+  #menu-hamburger {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1001;
+  }
 
-    #html-splash.hide-splash {
-      opacity: 0;
-    }
+  #menu-hamburger span {
+    display: block;
+    height: 4px;
+    background-color: #FF7A00;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
 
-    /* Versão do app no rodapé da splash */
-    #html-splash .app-version {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 14px;
-      color: rgba(255,255,255,0.8);
-      font-family: Arial, sans-serif;
-      z-index: 10;
-    }
-  </style>
+  #menu-panel {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    width: 200px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 1000;
+  }
 
+  #menu-panel.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #menu-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+  }
+
+  #menu-panel ul li {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  #menu-panel ul li:last-child {
+    border-bottom: none;
+  }
+
+  #menu-panel ul li.version {
+    color: #FF7A00;
+    font-weight: bold;
+    cursor: default;
+    text-align: center;
+  }
+
+  /* Splash visual */
+  #html-splash {
+    position: fixed;
+    inset: 0;
+    background: url('assets/images/Splash_Amigos_VemComigo.png') no-repeat center center;
+    background-size: cover;
+    z-index: 9999;
+    display: none;
+    transition: opacity 0.5s ease;
+  }
+</style>
 </head>
 <body>
 
-  <!-- SPLASH VISUAL (HTML) -->
-  <div id="html-splash">
-    <div class="app-version">Versão 1.0.0</div>
+<!-- Splash visual -->
+<div id="html-splash"></div>
+
+<!-- Header -->
+<header id="app-header">
+  <div class="header-left">
+    <img src="/icons/icon-512.png" alt="Vem Comigo" class="header-logo">
+    <span class="app-name">Vem Comigo</span>
   </div>
+  <!-- Botão hambúrguer -->
+  <div id="menu-hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
 
-  <!-- HEADER -->
-  <header id="app-header">
-    <div class="header-left">
-      <img src="/icons/icon-512.png" alt="Vem Comigo" class="header-logo">
-      <span class="app-name">Vem Comigo</span>
-    </div>
-  </header>
+<!-- Painel do menu -->
+<div id="menu-panel">
+  <ul>
+    <li data-route="menu-perfil">Perfil</li>
+    <li data-route="menu-sobre">Sobre o App</li>
+    <li data-route="menu-como-funciona">Como Funciona</li>
+    <li data-route="menu-termos">Termos de Uso</li>
+    <li data-route="menu-config">Configurações</li>
+    <li class="version">Versão <span id="appVersion"></span></li>
+  </ul>
+</div>
 
-  <!-- BANNER FIXO -->
-  <section id="banner-area">
-    <div class="banner-slide image" style="background-image:url('https://tireabundadosofa.com.br/wp-content/uploads/2017/06/o-que-fazer-em-itapoa.png')">
-      <span class="banner-tag">Patrocinado</span>
-    </div>
+<!-- BANNER FIXO (ACIMA DO FOOTER) -->
+<section id="banner-area">
+  <div class="banner-slide image" style="background-image:url('https://tireabundadosofa.com.br/wp-content/uploads/2017/06/o-que-fazer-em-itapoa.png')">
+    <span class="banner-tag">Patrocinado</span>
+  </div>
+  <div class="banner-slide active image" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee')">
+    <span class="banner-tag">Patrocinado</span>
+  </div>
+  <div class="banner-slide text orange-blue">
+    <span class="banner-tag">Patrocinado</span>
+    <strong>Promoção de fim de ano</strong>
+    <span>Já escolheu seu novo destino?</span>
+  </div>
+  <div class="banner-slide image" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')">
+    <span class="banner-tag">Patrocinado</span>
+  </div>
+  <div class="banner-slide text green">
+    <span class="banner-tag">Patrocinado</span>
+    <strong>Viajar é viver</strong>
+    <span>Descubra novos caminhos hoje</span>
+  </div>
+  <div class="banner-slide image" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWbZ_a93b4A85r2jVq8msMCL0ydEoOJ-QPRTER-IaFS2ZCPGWMOh7GIp0&s=10')">
+    <span class="banner-tag">Patrocinado</span>
+  </div>
+  <div class="banner-slide text blue">
+    <span class="banner-tag">Patrocinado</span>
+    <strong>Turismo acessível</strong>
+    <span>Caronas seguras e econômicas</span>
+  </div>
+</section>
 
-    <div class="banner-slide active image" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee')">
-      <span class="banner-tag">Patrocinado</span>
-    </div>
+<!-- APP ROOT -->
+<div id="app"></div>
 
-    <div class="banner-slide text orange-blue">
-      <span class="banner-tag">Patrocinado</span>
-      <strong>Promoção de fim de ano</strong>
-      <span>Já escolheu seu novo destino?</span>
-    </div>
+<!-- FOOTER FIXO -->
+<footer id="footer">
+  <button data-route="buscar">
+    <span class="icon">🔍</span>
+    <span>Buscar</span>
+  </button>
+  <button data-route="oferecer">
+    <span class="icon">🚗</span>
+    <span>Oferecer</span>
+  </button>
+  <button data-route="viagens">
+    <span class="icon">🧾</span>
+    <span>Viagens</span>
+  </button>
+  <button data-route="mensagens">
+    <span class="icon">💬</span>
+    <span>Mensagens</span>
+  </button>
+</footer>
 
-    <div class="banner-slide image" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')">
-      <span class="banner-tag">Patrocinado</span>
-    </div>
+<!-- SUPABASE SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <div class="banner-slide text green">
-      <span class="banner-tag">Patrocinado</span>
-      <strong>Viajar é viver</strong>
-      <span>Descubra novos caminhos hoje</span>
-    </div>
+<!-- AUTH -->
+<script src="/public/js/auth.js"></script>
 
-    <div class="banner-slide image" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWbZ_a93b4A85r2jVq8msMCL0ydEoOJ-QPRTER-IaFS2ZCPGWMOh7GIp0&s=10')">
-      <span class="banner-tag">Patrocinado</span>
-    </div>
+<!-- APP SPA -->
+<script src="/public/js/app.js"></script>
 
-    <div class="banner-slide text blue">
-      <span class="banner-tag">Patrocinado</span>
-      <strong>Turismo acessível</strong>
-      <span>Caronas seguras e econômicas</span>
-    </div>
-  </section>
+<!-- Banners Dinâmicos -->
+<script src="/public/js/banners-supabase.js"></script>
 
-  <!-- APP ROOT -->
-  <div id="app"></div>
+<!-- Versão -->
+<script src="/version.js"></script>
+<script>
+  document.getElementById("appVersion").innerText = APP_VERSION;
+</script>
 
-  <!-- FOOTER FIXO -->
-  <footer id="footer">
-    <button data-route="buscar">
-      <span class="icon">🔍</span>
-      <span>Buscar</span>
-    </button>
-    <button data-route="oferecer">
-      <span class="icon">🚗</span>
-      <span>Oferecer</span>
-    </button>
-    <button data-route="viagens">
-      <span class="icon">🧾</span>
-      <span>Viagens</span>
-    </button>
-    <button data-route="mensagens">
-      <span class="icon">💬</span>
-      <span>Mensagens</span>
-    </button>
-    <button data-route="perfil">
-      <span class="icon">👤</span>
-      <span>Perfil</span>
-    </button>
-  </footer>
+<!-- Menu Hambúrguer JS -->
+<script>
+  const menuBtn = document.getElementById('menu-hamburger');
+  const menuPanel = document.getElementById('menu-panel');
 
-  <!-- SUPABASE SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  menuBtn.addEventListener('click', () => {
+    menuPanel.classList.toggle('active');
+  });
 
-  <!-- AUTH -->
-  <script src="/public/js/auth.js"></script>
+  const menuItems = menuPanel.querySelectorAll('li[data-route]');
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const route = item.getAttribute('data-route');
+      if (route) {
+        window.location.hash = '#' + route;
+        if(window.router) router(); // chama router SPA
+      }
+      menuPanel.classList.remove('active'); // fecha menu
+    });
+  });
+</script>
 
-  <!-- APP -->
-  <script src="/public/js/app.js"></script>
+<!-- Splash visual JS -->
+<script>
+  (function () {
+    const splash = document.getElementById('html-splash');
+    const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-  <!-- BANNERS -->
-  <script src="/public/js/banners-supabase.js"></script>
-
-  <!-- SERVICE WORKER -->
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js");
+    if (isPWA) {
+      splash.style.display = 'block';
+      splash.style.opacity = 0;
+      setTimeout(() => { splash.style.opacity = 1; }, 50);
+      setTimeout(() => { splash.style.opacity = 0; }, 3050);
+      setTimeout(() => { splash.style.display = 'none'; }, 3550);
     }
-  </script>
+  })();
+</script>
 
-  <!-- SPLASH LOGIC -->
-  <script src="/version.js"></script>
-  <script>
-    (function () {
-      const splash = document.getElementById('html-splash');
-
-      // Detecta se é PWA
-      const isPWA =
-        window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone === true;
-
-      if (isPWA) {
-        // Mostra splash
-        splash.style.display = 'block';
-
-        // Tempo do splash
-        setTimeout(() => {
-          splash.classList.add('hide-splash'); // fade
-          setTimeout(() => {
-            splash.style.display = 'none';
-          }, 500); // duração do fade
-        }, 3000); // tempo visível
-      }
-
-      // Adiciona versão do app se existir
-      if (window.APP_VERSION) {
-        const versionDiv = splash.querySelector('.app-version');
-        versionDiv.innerText = "Versão " + APP_VERSION;
-      }
-    })();
-  </script>
+<!-- Service Worker -->
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js");
+}
+</script>
 
 </body>
 </html>
